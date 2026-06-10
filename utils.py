@@ -25,6 +25,14 @@ try:
 except LookupError:
     nltk.download('wordnet')
 
+# --- ADD THE TWO LINES BELOW ---
+nltk.download('punkt', quiet=True)
+nltk.download('punkt_tab', quiet=True)
+# -------------------------------
+
+nltk.download('stopwords', quiet=True)
+nltk.download('wordnet', quiet=True)
+
 # -----------------------------------------------------------------------------
 # Regex Cleaning Patterns
 # -----------------------------------------------------------------------------
