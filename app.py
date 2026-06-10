@@ -6,7 +6,6 @@ from utils import preprocessing  # Make sure your text cleaning function is in u
 
 st.set_page_config(
     page_title="Fake News Detection System",
-    page_icon="🛡️",
     layout="centered"
 )
 
@@ -26,7 +25,7 @@ def load_pipeline(model_choice):
 
 #Sidebar UI - Select model and show which one is active
 
-st.sidebar.header("⚙️ App Configuration")
+st.sidebar.header("App Configuration")
 st.sidebar.write("Choose which machine learning model you want to use for the classification task.")
 
 selected_model = st.sidebar.selectbox(
@@ -35,11 +34,11 @@ selected_model = st.sidebar.selectbox(
 )
 
 # Visual indicator in the sidebar showing which model is loaded
-st.sidebar.success(f"🤖 Loaded: {selected_model}")
+st.sidebar.success(f"Loaded: {selected_model}")
 
 # Main Application UI Layout
 
-st.title("🛡️ NLP Fake News Detection Dashboard")
+st.title("NLP Fake News Detection Dashboard")
 st.markdown("""
 This application utilizes advanced NLP pipelines to analyze incoming news text 
 and determine its statistical authenticity. 
@@ -59,9 +58,9 @@ if st.button("Run Text Analysis", type="primary"):
     word_count = len(user_input.split())
     # check if the input is empty or too short to analyze effectively
     if not user_input.strip():
-        st.warning("⚠️ Action required: Please input article text before analyzing.")
+        st.warning("Action required: Please input article text before analyzing.")
     elif word_count < 30:
-        st.warning("⚠️ Action required: Please input a longer article text before analyzing.")
+        st.warning("Action required: Please input a longer article text before analyzing.")
     else:
         with st.spinner("Processing text and running prediction algorithms..."):
             
@@ -92,13 +91,13 @@ if st.button("Run Text Analysis", type="primary"):
         # NOTE: Adjust mapping depending on your dataset labels. 
         # This code assumes 0 = Fake, 1 = Real. 
         if prediction == 0:
-            st.error(f"🚨 **Potential Misinformation / Fake News Detected**{confidence_text}")
+            st.error(f"**Potential Misinformation / Fake News Detected**{confidence_text}")
             st.markdown("""
             **Recommendation:** This text exhibits linguistic patterns frequently associated 
             with unreliable news reporting. Cross-verify these claims with trusted sources.
             """)
         else:
-            st.success(f"✅ **Likely Authentic / Credible News**{confidence_text}")
+            st.success(f"**Likely Authentic / Credible News**{confidence_text}")
             st.markdown("""
             **Recommendation:** The structural features of this article match patterns 
             typically found in factual, verified news publications.
