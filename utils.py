@@ -1,3 +1,5 @@
+# Preprocessing text yang di input di app
+
 import re
 import nltk
 import pandas as pd
@@ -5,11 +7,7 @@ from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 
-# -----------------------------------------------------------------------------
-# NLTK Resource Safeguard
-# -----------------------------------------------------------------------------
-# This checks if the NLTK packages exist; if not, it downloads them automatically.
-# This prevents crashes when running the app on different environments or clouds.
+
 try:
     nltk.data.find('tokenizers/punkt')
 except LookupError:
@@ -25,17 +23,15 @@ try:
 except LookupError:
     nltk.download('wordnet')
 
-# --- ADD THE TWO LINES BELOW ---
+
 nltk.download('punkt', quiet=True)
 nltk.download('punkt_tab', quiet=True)
-# -------------------------------
+
 
 nltk.download('stopwords', quiet=True)
 nltk.download('wordnet', quiet=True)
 
-# -----------------------------------------------------------------------------
-# Regex Cleaning Patterns
-# -----------------------------------------------------------------------------
+
 _RE_URL       = re.compile(r"https?://\S+|www\.\S+")
 _RE_MENTION   = re.compile(r"@\w+")
 _RE_HASHTAG   = re.compile(r"#\w+")
@@ -45,14 +41,11 @@ _RE_HTML      = re.compile(r"<[^>]+>|&\w+;")
 _RE_NONALPHA  = re.compile(r"[^a-z\s]")
 _RE_SPACES    = re.compile(r"\s+")
 
-# -----------------------------------------------------------------------------
-# Main Preprocessing Function
-# -----------------------------------------------------------------------------
+
 def preprocessing(text : str) -> str:
     if pd.isna(text):
         return ""
     
-    # Text normalization & regex cleaning
     text = text.lower()
     text = _RE_URL.sub(" ", text)
     text = _RE_MENTION.sub(" ", text)
@@ -63,7 +56,6 @@ def preprocessing(text : str) -> str:
     text = _RE_NONALPHA.sub(" ", text)
     text = _RE_SPACES.sub(" ", text).strip()
 
-    # Tokenization, stopword removal, and lemmatization
     tokens = word_tokenize(text)
     stop_words = set(stopwords.words("english"))
     lemmatizer = WordNetLemmatizer()
